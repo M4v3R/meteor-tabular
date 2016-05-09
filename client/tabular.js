@@ -216,10 +216,10 @@ var tabularOnRendered = function () {
     template.tabular.recordsTotal = tableInfo.recordsTotal || 0;
     template.tabular.recordsFiltered = tableInfo.recordsFiltered || 0;
 
-    // In some cases, there is no point in subscribing to nothing
-    if (_.isEmpty(tableInfo) ||
-        template.tabular.recordsTotal === 0 ||
-        template.tabular.recordsFiltered === 0) {
+    // M4v3R: Removed recordsTotal check to still fire a subscription even if
+    // there are no items to publish, so subscription ready handlers on the
+    // client are fired correctly
+    if (_.isEmpty(tableInfo)) {
       return;
     }
 
