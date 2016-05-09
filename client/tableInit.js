@@ -7,7 +7,9 @@
  */
 tableInit = function tableInit(tabularTable, template) {
   var columns = _.clone(tabularTable.options.columns);
-  var fields = {}, searchFields = [];
+  var searchFields = tabularTable.options.searchFields ? 
+    _.clone(tabularTable.options.searchFields) : [];
+  var fields = {};
 
   // Loop through the provided columns object
   _.each(columns, function (col) {
@@ -65,7 +67,10 @@ tableInit = function tableInit(tabularTable, template) {
       // so we will search on all columns that haven't been set to
       // `false`.
       if (col.searchable !== false) {
-        searchFields.push(Util.cleanFieldNameForSearch(dataProp));
+        var fieldName = Util.cleanFieldNameForSearch(dataProp);
+        if (searchFields.indexOf(fieldName) === -1) {
+          searchFields.push(fieldName);
+        }
       }
     }
 
